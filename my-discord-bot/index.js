@@ -2,6 +2,9 @@ require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
 const SpotifyWebApi = require('spotify-web-api-node');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
 
 const roasts = [
     "You're the reason they put instructions on shampoo bottles 🧴",
@@ -347,7 +350,7 @@ client.on('messageCreate', async message => {
                 const missTypes = [
                     `${defender} perfectly blocks ${attacker}'s attempt! 🛡️`,
                     `${attacker}'s shot misses the goal! 😮`,
-                    `${defender}'s defense was too strong! ���`,
+                    `${defender}'s defense was too strong! 💪`,
                     `${attacker} loses the ball! ❌`,
                     `${defender} shows their true ego! 🔥`
                 ];
@@ -715,6 +718,14 @@ ${champion.spells[3].description.replace(/<[^>]*>/g, '')}
             await message.reply('Error getting champion information.');
         }
     }
+});
+
+app.get('/', (req, res) => {
+    res.send('Discord bot is running!');
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 client.login(process.env.DISCORD_TOKEN);
